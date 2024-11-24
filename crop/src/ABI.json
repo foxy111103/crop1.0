@@ -1,5 +1,196 @@
 [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "cropId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "farmer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "healthScore",
+				"type": "uint256"
+			}
+		],
+		"name": "CropCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "cropId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "verifier",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			}
+		],
+		"name": "CropVerified",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "cropId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "dataField",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "newValue",
+				"type": "string"
+			}
+		],
+		"name": "DataUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "cropId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "feedback",
+				"type": "string"
+			}
+		],
+		"name": "FeedbackProvided",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "MIN_HEALTH_SCORE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "accesslist",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "access",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "accounts",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "farmer",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "merchant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "distributor",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_cropId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_feedback",
+				"type": "string"
+			}
+		],
+		"name": "addFeedback",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "allow",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -15,52 +206,6 @@
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "depositFunds",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "enum CropSupplyChain.Role",
-				"name": "_role",
-				"type": "uint8"
-			}
-		],
-		"name": "registerRole",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cropId",
-				"type": "uint256"
-			}
-		],
-		"name": "verifyCropByDistributor",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cropId",
-				"type": "uint256"
-			}
-		],
-		"name": "verifyCropByMerchant",
-		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -93,29 +238,59 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "address",
-				"name": "farmer",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "distributor",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "merchant",
-				"type": "address"
-			},
-			{
 				"internalType": "uint256",
 				"name": "healthScore",
 				"type": "uint256"
 			},
 			{
-				"internalType": "enum CropSupplyChain.CropStatus",
+				"internalType": "string",
+				"name": "farmer",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "distributor",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "merchant",
+				"type": "string"
+			},
+			{
+				"internalType": "enum Crop_life.CropStatus",
 				"name": "status",
 				"type": "uint8"
+			},
+			{
+				"internalType": "string",
+				"name": "pesticideData",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "transportationStatus",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "shelfLifeData",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "qualityCheck",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "feedback",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "tamperingChecked",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -123,12 +298,67 @@
 	},
 	{
 		"inputs": [],
-		"name": "getAmt",
+		"name": "depositFunds",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "disallow",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "distributorInfo",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "area",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "",
-				"type": "uint256"
+				"type": "address"
+			}
+		],
+		"name": "farmerInfo",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "field_location",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -145,34 +375,95 @@
 		"name": "getCrop",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "healthScore",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "farmer",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "distributor",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "merchant",
+						"type": "string"
+					},
+					{
+						"internalType": "enum Crop_life.CropStatus",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "pesticideData",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "transportationStatus",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "shelfLifeData",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "qualityCheck",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "feedback",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "tamperingChecked",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct Crop_life.Crop",
 				"name": "",
-				"type": "uint256"
-			},
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"name": "merchantInfo",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
 			},
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum CropSupplyChain.CropStatus",
-				"name": "",
-				"type": "uint8"
+				"internalType": "string",
+				"name": "market",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -180,15 +471,38 @@
 	},
 	{
 		"inputs": [],
-		"name": "MIN_HEALTH_SCORE",
+		"name": "owner",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "address",
 				"name": "",
-				"type": "uint256"
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "enum Crop_life.Role",
+				"name": "_role",
+				"type": "uint8"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "loc",
+				"type": "string"
+			}
+		],
+		"name": "registerRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -215,7 +529,7 @@
 		"name": "roles",
 		"outputs": [
 			{
-				"internalType": "enum CropSupplyChain.Role",
+				"internalType": "enum Crop_life.Role",
 				"name": "",
 				"type": "uint8"
 			}
@@ -224,16 +538,39 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "storedData",
-		"outputs": [
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_cropId",
+				"type": "uint256"
+			},
 			{
 				"internalType": "string",
-				"name": "",
+				"name": "_field",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_value",
 				"type": "string"
 			}
 		],
-		"stateMutability": "view",
+		"name": "updateCropData",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_cropId",
+				"type": "uint256"
+			}
+		],
+		"name": "verifyCrop",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
