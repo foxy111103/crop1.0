@@ -8,15 +8,13 @@ const OwnerPage = () => {
   const [qdata, setQdata] = useState("");
   const [cropId, setCropId] = useState("");
   const [farmer,setFarmer]=useState("");
+  const [user_add,setUser_add]=useState("");
+  const [accessInfo, setAccessInfo] = useState(null);
+
 
   const { contract, account, owner } = useContext(Web3Context);
 
   const updateCropData = async (field, value) => {
-    if (account.toLowerCase() !== owner.toLowerCase()) {
-      alert("Only the owner can perform this action.");
-      return;
-    }
-
     try {
       await contract.methods.updateCropData(cropId, field, value).send({ from: account });
       alert(`${field} updated successfully!`);
@@ -25,22 +23,40 @@ const OwnerPage = () => {
       alert(`Failed to update ${field}.`);
     }
   };
-  const farmer_info=async(f_add)=>{
+  const allow_access=async(user_add)=>{
     if (account.toLowerCase() !== owner.toLowerCase()) {
-        alert("Only the owner can perform this action.");
-        return;
-      }
-  
-      try {
-        const info=await contract.methods.farmerInfo(f_add).call();
-        alert(`Name:${info.name}`)
-      } catch (error) {
-        console.error(`Error fetching farmerr:`, error);
-        alert(`only owner can fetch`);
-      }
+      alert("Only the owner can give access");
+      return;
+    }
+    try{
+      await contract.methods.allow(user_add).send({from: account});
+      alert ("Access given successfully");
+    }
+    catch(error){
+      alert ("error giving access");
+    }
+
+  }
+  const farmer_info=async(f_add)=>{
+    const acc_access = await contract.methods.accesslist(account).call();
+    const isAuthorized = account.toLowerCase() === owner.toLowerCase() || acc_access;
+    if (!isAuthorized){
+      alert("Only the owner can perform this action or access is not allowed.");
+      return;
+    }
+    
+    try {
+      const info = await contract.methods.farmerInfo(f_add).call();
+      alert(`Name: ${info.name}`);
+    } catch (error) {
+      console.error("Error fetching farmer:", error);
+      alert("An error occurred while fetching farmer information.");
+    }
     };
   const distributor_info=async(f_add)=>{
-        if (account.toLowerCase() !== owner.toLowerCase()) {
+    const acc_access = await contract.methods.accesslist(account).call();
+    const isAuthorized = account.toLowerCase() === owner.toLowerCase() || acc_access;
+    if (!isAuthorized) {
             alert("Only the owner can perform this action.");
             return;
           }
@@ -54,7 +70,9 @@ const OwnerPage = () => {
           }
         };
 const merchant_info=async(f_add)=>{
-            if (account.toLowerCase() !== owner.toLowerCase()) {
+  const acc_access = await contract.methods.accesslist(account).call();
+  const isAuthorized = account.toLowerCase() === owner.toLowerCase() || acc_access;
+  if (!isAuthorized) {
                 alert("Only the owner can perform this action.");
                 return;
               }
@@ -68,7 +86,9 @@ const merchant_info=async(f_add)=>{
               }
             };
   const crop_acc=async(id)=>{
-    if (account.toLowerCase() !== owner.toLowerCase()) {
+    const acc_access = await contract.methods.accesslist(account).call();
+    const isAuthorized = account.toLowerCase() === owner.toLowerCase() || acc_access;
+    if (!isAuthorized) {
         alert("Only the owner can perform this action.");
         return;
       }
@@ -80,6 +100,10 @@ const merchant_info=async(f_add)=>{
         console.error(`Error fetching farmerr:`, error);
         alert(`only owner can fetch`);
       }
+  }
+
+  const viewAccess = async()=>{
+    
   }
   return (
     <div>
@@ -131,7 +155,15 @@ const merchant_info=async(f_add)=>{
 
       <h2>Crop Accounts</h2>
       <button onClick={()=>crop_acc(cropId)}>Crop Info</button>
+
+      <h2>Give Access</h2>
+      <input type="text" placeholder="address" value={user_add} onChange={(e)=> setUser_add(e.target.value)}></input>
+      <button onClick={()=>allow_access(user_add)}>Allow</button>
+
+      <h2>Access List</h2>
+
     </div>
+    
   );
 };
 

@@ -6,6 +6,8 @@ import FarmerPage from "./component/farmer";
 import DistributorPage from "./component/distributer";
 import MerchantPage from "./component/marchent";
 import OwnerPage from "./component/owner";
+import ConsumerPage from "./component/consumer";
+
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
           <Route path="/distributor" element={<DistributorPage />} />
           <Route path="/merchant" element={<MerchantPage />} />
           <Route path="/owner" element={<OwnerPage />} />
+          <Route path="/consumer" element={<ConsumerPage />} />
         </Routes>
       </Router>
     </Web3Provider>
